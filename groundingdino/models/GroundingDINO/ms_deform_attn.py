@@ -50,7 +50,7 @@ class MultiScaleDeformableAttnFunction(Function):
         im2col_step,
     ):
         ctx.im2col_step = im2col_step
-        output = _C.ms_deform_attn_forward(
+        output = ms_deform_attn_forward(
             value,
             value_spatial_shapes,
             value_level_start_index,
@@ -77,7 +77,7 @@ class MultiScaleDeformableAttnFunction(Function):
             sampling_locations,
             attention_weights,
         ) = ctx.saved_tensors
-        grad_value, grad_sampling_loc, grad_attn_weight = _C.ms_deform_attn_backward(
+        grad_value, grad_sampling_loc, grad_attn_weight = ms_deform_attn_backward(
             value,
             value_spatial_shapes,
             value_level_start_index,
