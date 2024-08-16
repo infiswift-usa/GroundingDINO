@@ -1,11 +1,10 @@
---extra-index-url https://download.pytorch.org/whl/cu121
-torch==2.2.2+cu121
-torchvision==0.17.2+cu121
-xformers==0.0.25.post1
+torch
+torchvision
+xformers
 addict
 yapf
 timm
-numpy==1.26.4
-opencv-python==4.10.0.84
+numpy
+opencv-python
 supervision>=0.22.0
-pycocotools==2.0.8
+pycocotools
