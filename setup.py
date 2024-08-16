@@ -26,8 +26,13 @@ import subprocess
 
 import subprocess
 import sys
+import site
 
 def install_torch():
+    venv = os.environ.get("VIRTUAL_ENV")
+    if venv:
+        site.addsitedir(f"{venv}/lib/site-packages")
+
     try:
         import torch
     except ImportError:
@@ -83,7 +88,7 @@ def get_extensions():
     define_macros = []
     print(f"CUDA HOME : {CUDA_HOME}")
     print(f"TORCH CUDA CHECK : {torch.cuda.is_available()}")
-    print(f"TORCH_CUDA_ARCH_LIST : {os.environ['TORCH_CUDA_ARCH_LIST']}")
+    print(f"TORCH_CUDA_ARCH_LIST : {os.environ.get('TORCH_CUDA_ARCH_LIST')}")
     if CUDA_HOME is not None and (torch.cuda.is_available() or "TORCH_CUDA_ARCH_LIST" in os.environ):
         print("Compiling with CUDA")
         extension = CUDAExtension
