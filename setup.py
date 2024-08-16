@@ -38,7 +38,7 @@ def install_torch():
     try:
         import torch
     except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "torch"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "torch==2.2.2+cu121", "--index-url", "https://download.pytorch.org/whl/cu121"])
 
 # Call the function to ensure torch is installed
 install_torch()
