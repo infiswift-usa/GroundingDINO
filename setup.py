@@ -31,7 +31,9 @@ import site
 def install_torch():
     venv = os.environ.get("VIRTUAL_ENV")
     if venv:
-        site.addsitedir(f"{venv}/lib/site-packages")
+        site_dir = f"{venv}\\Lib\\site-packages"
+        site.addsitedir(site_dir)
+        os.environ["PYTHONPATH"] = site_dir
 
     try:
         import torch
