@@ -71,6 +71,17 @@ requirements = ["torch", "torchvision"]
 
 torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
 
+def set_cuda_arch_list_in_env():
+    # Inject the cuda arch list into the environment
+    # This only needs the CUDA toolkit to be installed and doesn't
+    # need the presence of a GPU. This is very useful since it
+    # helps build groundingdino on a CPU only machine and use
+    # the resulting wheel elsewhere.
+    if CUDA_HOME:
+        arch_list = torch._C._cuda_getArchFlags().replace("sm_", "").split()
+        # convert arch numbers such as "50" and "86" to "5.0" and "8.6"
+        arch_list = " ".join([".".join(list(a)[:2]) for a in arch_list])
+        os.environ["TORCH_CUDA_ARCH_LIST"] = arch_list
 
 def get_extensions():
     this_dir = os.path.dirname(os.path.abspath(__file__))
@@ -88,6 +99,8 @@ def get_extensions():
 
     extra_compile_args = {"cxx": []}
     define_macros = []
+    if os.environ.get("BUILD_INSTALLER"):
+        set_cuda_arch_list_in_env()
     print(f"CUDA HOME : {CUDA_HOME}")
     print(f"TORCH CUDA CHECK : {torch.cuda.is_available()}")
     print(f"TORCH_CUDA_ARCH_LIST : {os.environ.get('TORCH_CUDA_ARCH_LIST')}")
