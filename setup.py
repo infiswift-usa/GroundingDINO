@@ -221,6 +221,7 @@ if __name__ == "__main__":
         license = f.read()
 
     write_version_file()
+    build_ext_class = torch.utils.cpp_extension.BuildExtension.with_options(use_ninja=False)
 
     setup(
         name="groundingdino",
@@ -237,5 +238,5 @@ if __name__ == "__main__":
             )
         ),
         ext_modules=get_extensions(),
-        cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
+        cmdclass={"build_ext": build_ext_class},
     )
