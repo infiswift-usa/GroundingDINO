@@ -269,5 +269,5 @@ class Model:
                     class_ids.append(classes.index(class_))
                     break
             else:
-                class_ids.append(0)
+                class_ids.append(None)
         return np.array(class_ids)
